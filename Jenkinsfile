@@ -8,18 +8,13 @@ pipeline {
     }
     stages {
         stage('Unit Test') { 
-        steps {
-            sh "mvn clean install"
-        }
+            steps {
+                sh "mvn clean install"
+            }
         }
         stage('Deploy CloudHub') { 
             steps {
-                withMaven (
-                    maven:  "maven",
-                    mavenLocalRepo: "${WORKSPACE}/.repository"
-                ){
-                    sh "mvn -X clean deploy -DmuleDeploy -Dusername=${ANYPOINT_USR} -Dpassword=${ANYPOINT_PSW} -DappName=test_jenkins_app -Denvironment=Sandbox" 
-                }
+                sh "mvn -X clean deploy -DmuleDeploy -Dusername=${ANYPOINT_USR} -Dpassword=${ANYPOINT_PSW} -DappName=test_jenkins_app -Denvironment=Sandbox" 
             }
         }   
   }
